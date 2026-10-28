@@ -1,0 +1,19 @@
+services:
+  discord-bot:
+    build: .
+    container_name: mi-bot-discord
+    env_file: .env
+    ports:
+      - "59442:8088"        # Expone la web de administración del bot
+    volumes:
+      - ./data:/data       # Guarda config.json en tu carpeta /dcbotijo/data
+    restart: unless-stopped
+
+  status-web:
+    image: nginx:alpine
+    container_name: status-web
+    volumes:
+      - ./status-web:/usr/share/nginx/html:ro
+    ports:
+      - "59443:80"
+    restart: unless-stopped
